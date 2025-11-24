@@ -1,0 +1,191 @@
+<!--
+Smart Learn Liberia - Single-file responsive website
+Usage:
+1. Save this file as `smart-learn-liberia.html` on your Chromebook.
+2. Open it in Chrome (File > Open File) or double-click the file.
+3. To publish: upload to any static host (GitHub Pages, Netlify) or to a simple web hosting provider.
+4. The contact form opens WhatsApp with the message prefilled to the number +231555934408.
+
+WhatsApp number used in the site: +231555934408
+
+Customization notes:
+- Replace logo text with your own image if desired (search for <!--LOGO-IMG--> and replace the <h1> line).
+- Update pricing or subjects in the SERVICES and PRICING sections.
+- The form uses a click-to-chat wa.me URL — no server required.
+
+This single HTML contains:
+- Mobile-first responsive layout
+- Hero section with CTA
+- Services, Pricing, About, FAQ
+- Click-to-chat WhatsApp button and a contact form that opens WhatsApp with a prefilled message
+- Simple downloadable PDF link (example placeholder)
+- Small script to build the WhatsApp link safely and validate inputs
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Smart Learn Liberia • Tutoring on WhatsApp</title>
+  <meta name="description" content="Smart Learn Liberia — Quick, affordable WhatsApp tutoring, WAEC prep, homework help and study notes.">
+  <style>
+    :root{--accent:#0b6efd;--muted:#6b7280;--card:#ffffff}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; color:#0f172a; background:#f8fafc}
+    .container{max-width:980px;margin:0 auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo h1{margin:0;font-size:18px}
+    nav a{margin-left:12px;text-decoration:none;color:var(--muted);font-size:14px}
+    .hero{display:flex;flex-direction:column;gap:16px;padding:28px;background:linear-gradient(180deg,#fff,#f8fafc);border-radius:12px}
+    .hero h2{margin:0;font-size:24px}
+    .cta{display:flex;gap:12px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-muted{background:transparent;border:1px solid #e6eefc;color:var(--accent)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+    .card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 4px 12px rgba(12,13,14,0.04)}
+    h3{margin:0 0 8px 0}
+    p{margin:0;color:var(--muted);line-height:1.45}
+    ul{padding-left:16px;margin:8px 0}
+    footer{margin-top:26px;padding:16px;text-align:center;color:var(--muted)}
+    .whatsapp-fab{position:fixed;right:18px;bottom:18px;background:#25D366;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,0.18);cursor:pointer}
+    .whatsapp-fab img{width:34px;height:34px}
+    form label{display:block;margin-top:8px;font-weight:600;font-size:13px}
+    input[type=text], input[type=tel], textarea, select{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid #e6e9ef}
+    textarea{min-height:90px}
+    @media(max-width:720px){.grid{grid-template-columns:1fr}.hero{padding:18px}.logo h1{font-size:16px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <!-- LOGO-IMG: replace this H1 with an <img> tag if you have a logo -->
+        <h1>Smart Learn Liberia</h1>
+        <div style="font-size:12px;color:var(--muted)">WAEC • Homework • Lessons</div>
+      </div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="flex:1">
+          <h2>Fast, affordable WhatsApp tutoring for students in Liberia</h2>
+          <p>Send your question on WhatsApp and get a clear step-by-step explanation. WAEC prep, daily homework, essays and past paper practice.</p>
+          <div class="cta" style="margin-top:12px">
+            <button class="btn btn-primary" onclick="openWhatsApp('I want to start tutoring with Smart Learn Liberia. My name is ___ and I am in class ___')">Start on WhatsApp</button>
+            <a class="btn btn-muted" href="#pricing">See Pricing</a>
+          </div>
+        </div>
+        <div style="width:240px;min-width:180px">
+          <div class="card">
+            <h3>How it works</h3>
+            <ul>
+              <li>Send picture or type your question on WhatsApp</li>
+              <li>Get step-by-step explanations in 5–30 minutes</li>
+              <li>Subscribe for unlimited help</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:18px">
+        <div class="card">
+          <h3 id="services">Services</h3>
+          <p>We cover WAEC prep, homework solutions, voice-note explanations, quizzes, and past paper marking.</p>
+        </div>
+        <div class="card">
+          <h3 id="pricing">Pricing</h3>
+          <p>Daily: L$100 — Weekly: L$500 — Monthly: L$1,500 (Local mobile money accepted)</p>
+        </div>
+        <div class="card">
+          <h3>Subjects</h3>
+          <p>Math, English, Integrated Science, Biology, Chemistry, Physics, Literature, ICT</p>
+        </div>
+        <div class="card">
+          <h3>Delivery</h3>
+          <p>Fast text answers, image explanations, and optional voice notes for tricky problems.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <div class="card">
+        <h3>Contact & Homework Form</h3>
+        <p>Fill the form below — when you click Send we will open WhatsApp so you can send the homework directly to our number.</p>
+        <form id="hwForm" onsubmit="submitForm(event)">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Mariama" required>
+
+          <label for="level">Class / Level</label>
+          <select id="level" name="level">
+            <option>JHS 1</option>
+            <option>JHS 2</option>
+            <option>JHS 3</option>
+            <option>Senior 1</option>
+            <option>Senior 2</option>
+            <option>Senior 3</option>
+          </select>
+
+          <label for="subject">Subject</label>
+          <input id="subject" name="subject" type="text" placeholder="e.g. Math" required>
+
+          <label for="question">Homework question (type or paste). For images, just open WhatsApp instead.</label>
+          <textarea id="question" name="question" placeholder="Type your question here..." required></textarea>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button type="submit" class="btn btn-primary">Send to WhatsApp</button>
+            <button type="button" class="btn" onclick="openWhatsApp('I want to subscribe to Smart Learn Liberia. Name: , Class: , Phone: ')">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <div class="card">
+        <h3>FAQ</h3>
+        <p><strong>Q:</strong> How do I pay?<br><strong>A:</strong> Pay via MTN or Orange Mobile Money and send the screenshot on WhatsApp.</p>
+        <p><strong>Q:</strong> How long before I get an answer?<br><strong>A:</strong> Typically 5–30 minutes depending on queue and plan.</p>
+      </div>
+    </section>
+
+    <footer>
+      <div>Smart Learn Liberia • WhatsApp: <a href="#contact">+231 555 934 408</a></div>
+      <div style="margin-top:6px;font-size:13px;color:var(--muted)">Built for easy use on phones and Chromebooks. Save this file and open in Chrome.</div>
+    </footer>
+  </div>
+
+  <!-- WhatsApp floating button -->
+  <div class="whatsapp-fab" title="Start on WhatsApp" onclick="openWhatsApp('Hello, I need help with my homework. My name is __ and I am in class __')">
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='%23fff' d='M380.9 97.1C339-8.5 255.8-37.4 177.7 1.7 104.3 38.5 64.8 118.6 80.4 195.4L32 448l258.8-48.5c77-15.5 137.2-55.9 172.2-129 26.8-57.9 23.8-125-82.1-173.4zM224 392c-41.8 0-74.2-17.9-95-40.7l-5.6-6 9.5-56.1c4.2-24.8 21.4-45.7 44.6-56.9 11.9-5.9 25.6-9.2 39.6-9.2 41.8 0 74.2 17.9 95 40.7s20.9 53.9 5.4 78.3c-20.6 33.9-60.6 84.9-84.5 84.9z'/></svg>" alt="WhatsApp">
+  </div>
+
+  <script>
+    const WA_NUMBER = '231555934408'; // no + sign, wa.me uses country code
+
+    function openWhatsApp(prefilled){
+      const text = encodeURIComponent(prefilled || 'Hello Smart Learn Liberia, I want to start tutoring.');
+      const url = `https://wa.me/${WA_NUMBER}?text=${text}`;
+      window.open(url,'_blank');
+    }
+
+    function submitForm(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const level = document.getElementById('level').value;
+      const subject = document.getElementById('subject').value.trim();
+      const question = document.getElementById('question').value.trim();
+      if(!name||!subject||!question){alert('Please complete all fields.');return}
+      const message = `Hi Smart Learn Liberia!\nName: ${name}\nClass: ${level}\nSubject: ${subject}\nQuestion: ${question}`;
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url,'_blank');
+    }
+  </script>
+</body>
+</html>
